@@ -13,9 +13,11 @@
 
 
   <p>
-    <a href="/users/<%= @current_user.id %>">
+    <a href="/users/task">
       <% if @current_user.project %>
-        <%= @current_user.project.name %>
+        <%= content_tag(:span ,"nom du projet : #{@current_user.project.name}") %>
+        <%= %>
+        <%=content_tag(:span ,"| la durée  :  #{@current_user.project.duration} |")%>
       <% else %>
         <%= "pas de projets à afficher" %>
       <% end %>

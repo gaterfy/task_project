@@ -10,9 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_28_100736) do
+ActiveRecord::Schema.define(version: 2019_02_28_164655) do
 
   create_table "projects", force: :cascade do |t|
+    t.string "name"
+    t.string "duration"
+    t.integer "task_id"
+    t.index ["task_id"], name: "index_projects_on_task_id"
+  end
+
+  create_table "tasks", force: :cascade do |t|
     t.string "name"
     t.string "duration"
   end

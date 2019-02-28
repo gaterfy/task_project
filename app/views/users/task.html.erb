@@ -1,0 +1,6 @@
+<h1>Tache</h1>
+<% if @current_user.project %>
+<%@current_user.project.task%>
+<%= content_tag(:span ,"voici la tache : #{@current_user.project.task.name}") %>
+<% end %>
+<p>Find me in app/views/users/task.html.erb</p>
