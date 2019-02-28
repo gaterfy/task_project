@@ -1,0 +1,29 @@
+<% if @current_user %>
+  <% if @current_user.role == "admin" %>
+    <h1>Bienvenue administrateur <%= @current_user.name %> !</h1>
+    <a href="/home">accueil</a>
+    <a href="/users/admin">admin</a>
+  <% else %>
+    <h1>Bienvenue <%= @current_user.name %> !</h1>
+  <% end %>
+  <%= form_tag "/users/login", method: :delete do %>
+      <input type="submit" value="Déconnexion" />
+  <% end %>
+  <h1>Listes de projets</h1>
+
+
+  <p>
+    <a href="/users/<%= @current_user.id %>">
+      <% if @current_user.project %>
+        <%= @current_user.project.name %>
+      <% else %>
+        <%= "pas de projets à afficher" %>
+      <% end %>
+    </a>
+  </p>
+
+
+<% else %>
+    <h1>Bienvenue visiteur anonyme !</h1>
+    <a href="/users/login">S'identifier</a>
+<% end %>
