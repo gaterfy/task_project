@@ -13,9 +13,20 @@ class UsersController < ApplicationController
     redirect_to "/users/home"
   end
 
+
+  def project
+    if @current_user.role == "admin"
+      Project.create(name: params[:name], duration: params[:duration], user_id: @current_user.id)
+      flash[:info] = "Vous avez créer un projet"
+      redirect_to "/users/home"
+    else
+      flash[:info] = "vous n'êtes pas autorisé à faire ça"
+    end
+  end
+
   def create
     if @current_user.role == "admin"
-      User.create(name: params[:name], password: params[:password])
+      User.create(name: params[:session][:email], password: params[:session][:password])
       flash[:info] = "Vous avez créer un compte , connectez-vous à présent"
       redirect_to "/users/login"
     else

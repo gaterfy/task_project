@@ -10,5 +10,7 @@ Rails.application.routes.draw do
   delete 'users/login' => 'users#logout'
   post 'users/login' => 'users#check'
   post 'users/registration' => 'users#create'
+
+  post'/users/create-project' => 'users#project'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
