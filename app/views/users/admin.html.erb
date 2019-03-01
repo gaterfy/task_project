@@ -1,0 +1,26 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+<% if @current_user %>
+  <% if @current_user.role == "admin" %>
+    <h1>Bienvenue administrateur <%= @current_user.name %> !</h1>
+    <a href="/home">accueil</a>
+    <a href="/users/admin">admin</a>
+    <a href="/users/admin">créer un utilisateur</a>
+    <a href="/users/admin">creer un projet </a>
+
+    <div id="containers">
+      <div class="form-group">
+        <%= form_tag "/users/registration", method: "post" do %>
+          User name:<br>
+          <input name="name" type="text" class="form-control" id="exampleInputEmail1"><br>
+          password:<br>
+          <input name="password" type="password" class="form-control">
+      </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        <% end %>
+      </div>
+      
+  <% else %>
+    <h1>Vous n'avez pas le droit d'être ici</h1>
+  <% end %>
+<% end %>

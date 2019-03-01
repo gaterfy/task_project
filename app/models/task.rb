@@ -1,4 +1,4 @@
 # app/models/task.rb
 class Task < ActiveRecord::Base
-  has_many :project
+  belongs_to :project
 end

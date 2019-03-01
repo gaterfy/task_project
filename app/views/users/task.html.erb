@@ -1,6 +1,19 @@
+<style>
+
+</style>
+
 <h1>Tache</h1>
-<% if @current_user.project %>
-<%@current_user.project.task%>
-<%= content_tag(:span ,"voici la tache : #{@current_user.project.task.name}") %>
+<% if @current_user.projects %>
+  <table id="customers">
+    <tr>
+      <th>Nom du tache</th>
+      <th>date du projet</th>
+    </tr>
+  <% @current_user.projects.each do |project| %>
+    <tr>
+      <%= content_tag(:td ,Task.find(project.id-1).name) %>
+      <%= content_tag(:td ,Task.find(project.id-1).duration)%>
+    </tr>
 <% end %>
-<p>Find me in app/views/users/task.html.erb</p>
+</table>
+<% end %>

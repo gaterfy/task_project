@@ -1,4 +1,4 @@
 # app/models/user.rb
 class User < ActiveRecord::Base
-  belongs_to :project
+  has_many :projects
 end

@@ -13,11 +13,23 @@
 
 
   <p>
-    <a href="/users/task">
-      <% if @current_user.project %>
-        <%= content_tag(:span ,"nom du projet : #{@current_user.project.name}") %>
-        <%= %>
-        <%=content_tag(:span ,"| la durée  :  #{@current_user.project.duration} |")%>
+    <a >
+      <% if @current_user.projects %>
+      <table id="customers">
+        <tr>
+          <th>Nom du projet</th>
+          <th>durée du projet</th>
+        </tr>
+        <% @current_user.projects.each do |project| %>
+          <tr>
+            <%= content_tag(:td, content_tag(:a, project.name,href:"/users/task")) %>
+
+            <%=content_tag(:td, content_tag(:a, project.duration, href:"/users/task"))%>
+          </tr>
+
+        <% end %>
+        </table>
+
       <% else %>
         <%= "pas de projets à afficher" %>
       <% end %>

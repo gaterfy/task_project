@@ -4,8 +4,6 @@ class UsersController < ApplicationController
   def home
   end
 
-
-
   def login
   end
 
@@ -14,6 +12,15 @@ class UsersController < ApplicationController
     flash[:info] = "Vous êtes maintenant déconnecté."
     redirect_to "/users/home"
   end
+
+  def create
+    if @current_user.role == "admin"
+      User.create(name: params[:name], password: params[:password])
+      flash[:info] = "Vous avez créer un compte , connectez-vous à présent"
+      redirect_to "/users/login"
+    else
+      flash[:info] = "vous n'êtes pas autorisé à faire ça"
+  end end
 
   def check
     @current_user = User.where(name: params[:name], password: params[:password]).first
@@ -32,6 +39,4 @@ class UsersController < ApplicationController
     @users = User.all
     @project = Project.all
   end
-
-
 end
