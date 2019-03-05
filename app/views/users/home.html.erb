@@ -1,13 +1,106 @@
+<div id="flex-user">
+  <span id="logo">Simple project</span>
+  <span id="user-name">Emmanuel Nozard</span>
+</div>
+
+<div id="menu-bar">
+  <ul>
+    <li><a class="" href="#home">Fiches projets</a></li>
+    <li><a href="#news">Tâche</a></li>
+    <li><a href="#contact">Taskforce</a></li>
+    <li><a class="active" href="#about">Administration</a></li>
+    <li style="float:right" onclick="shutDown()"><a href="#about"><i class="glyphicon glyphicon-off"></i></a></li>
+    <!--li><span class="right-glyphicon glyphicon glyphicon-off"></span></li-->
+  </ul>
+</div>
+<style>
+  .form-content{
+    background-color: #f6f6f6;
+    border-top: 1px solid #dce8f1;
+    padding:20px;
+  }
+</style>
+<%#begin to of the form content%>
+<div class="form-content">
+  <%= form_with url: 'login', local: true do |f| %>
+    <h2>Mon adresse e-mail</h2>
+
+    <div class="form-group">
+      <%= f.label(:previousMail, "précédent e-mail") %>
+      <%= f.text_field(:previousMail, required: true, id:"exampleInputEmail1" , class:"form-control", placeholder:"Enter email", minlength: 2, maxlength: 100) %>
+
+      <%= f.label(:newMail, "nouveau e-mail") %>
+      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+    </div>
+
+    <div class="form-group">
+      <label for="exampleInputPassword1">Password</label>
+      <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+    </div>
+    <div class="form-group">
+      <label for="exampleSelect1">Example select</label>
+      <select class="form-control" id="exampleSelect1">
+        <option>1</option>
+        <option>2</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="exampleSelect2">Example multiple select</label>
+      <select multiple class="form-control" id="exampleSelect2">
+        <option>1</option>
+        <option>2</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="exampleTextarea">Example textarea</label>
+      <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="exampleInputFile">File input</label>
+      <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
+      <small id="fileHelp" class="form-text text-muted">This is some placeholder block-level help text for the above input. It's a bit lighter and easily wraps to a new line.</small>
+    </div>
+    <fieldset class="form-group">
+      <legend>Radio buttons</legend>
+      <div class="form-check">
+        <label class="form-check-label">
+          <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+          Option one is this and that&mdash;be sure to include why it's great
+        </label>
+      </div>
+      <div class="form-check">
+      <label class="form-check-label">
+          <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="option2">
+          Option two can be something else and selecting it will deselect option one
+        </label>
+      </div>
+      <div class="form-check disabled">
+      <label class="form-check-label">
+          <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios3" value="option3" disabled>
+          Option three is disabled
+        </label>
+      </div>
+    </fieldset>
+    <div class="form-check">
+      <label class="form-check-label">
+        <input type="checkbox" class="form-check-input">
+        Check me out
+      </label>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  <%end%>
+
+</div>
+
 <% if @current_user %>
   <% if @current_user.role == "admin" %>
     <h1>Bienvenue administrateur <%= @current_user.name %> !</h1>
-    <a href="/home">accueil</a>
+    <a href="/users/home">accueil</a>
     <a href="/users/admin">admin</a>
   <% else %>
     <h1>Bienvenue <%= @current_user.name %> !</h1>
   <% end %>
-  <%= form_tag "/users/login", method: :delete do %>
-      <input type="submit" value="Déconnexion" />
+  <%= form_tag "/users/login", :id => 'myForm', method: :delete do %>
   <% end %>
   <h1>Listes de projets</h1>
 

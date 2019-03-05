@@ -15,4 +15,11 @@
  */
 //@import "bootstrap";
 
-@import 'bootstrap'; 
+@import 'bootstrap';
+
+@import 'bootstrap/glyphicons';
+
+body {
+  font-family: "Poppins", sans-serif;
+  height: 100vh;
+}

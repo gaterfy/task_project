@@ -1,7 +1,23 @@
-<h1>Connexion</h1>
-<a href="/users/home">Retourner à l'accueil</a>
-<%= form_tag "/users/login", method: :post do %>
-  <input type="text" name="name" />
-  <input type="password" name="password" />
-  <input type="submit" value="Se connecter" />
-<% end %>
+<div class="wrapper fadeInDown">
+<h1>SIMPLE PROJECT</h1>
+  <div id="formContent">
+    <h3 id="formFooter">connexion</h3>
+
+    <%= form_with url: "/users/login", local: true do |f| %>
+      <div class="flex-container">
+        <div class="input-group-addon"><i class="glyphicon glyphicon-user glyphicon-settings"></i></div>
+        <%= f.text_field(:name, required: true, class:"glyphicon glyphicon-user fadeIn second",minlength: 2, maxlength: 100) %>
+      </div>
+        <div class="flex-container">
+          <div class="input-group-addon"><i class="glyphicon glyphicon-lock glyphicon-settings"></i></div>
+          <%= f.password_field(:password, required: true, id:"password", class:"fadeIn third", minlength: 3, maxlength: 30) %>
+        </div>
+        <div id="logout-msg">
+            <%= flash[:notice] %>
+        </div>
+        <%= f.submit "Se connecter", data: {disable_with: false}, class:"fadeIn fourth" %>
+   <% end %>
+
+   <%= content_tag(:div ,content_tag(:a, "mot de passe oublié?", href:"/users/update"), id:"formFooter", class:"underlineHover")%>
+</div>
+</div>

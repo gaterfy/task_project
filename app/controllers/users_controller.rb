@@ -9,8 +9,10 @@ class UsersController < ApplicationController
 
   def logout
     session[:user_id] = nil
-    flash[:info] = "Vous êtes maintenant déconnecté."
-    redirect_to "/users/home"
+     #flash[:info] = "Vous êtes maintenant déconnecté."
+    flash[:notice]= "Vous êtes maintenant déconnecté."
+     #flash = { success: "Vous êtes maintenant déconnecté.", error: "It failed." }
+    redirect_to "/users/login"
   end
 
 
@@ -34,7 +36,8 @@ class UsersController < ApplicationController
   end end
 
   def check
-    @current_user = User.where(name: params[:name], password: params[:password]).first
+    #@current_user = User.where(name: params[:name], password: params[:password]).first
+    @current_user = User.find_by(name: params[:name]).authenticate(params[:password])
     if @current_user
       session[:user_id] = @current_user.id
       flash[:info] = "Vous êtes maintenant connecté"
@@ -50,4 +53,9 @@ class UsersController < ApplicationController
     @users = User.all
     @project = Project.all
   end
+
+  def user_params
+    params.fetch(:user, {}).permit(:name, :email, :password, :password_confirmation)
+    end
+
 end
