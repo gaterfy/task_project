@@ -3,23 +3,31 @@
     <h1>Bienvenue administrateur <%= @current_user.name %> !</h1>
     <a href="/home">accueil</a>
     <a href="/users/admin">admin</a>
-
-
-
-
     <h2>créer un utilisateur</h2>
 
-    <%= form_with(url: "/users/registration", scope: :session, local: true) do |form| %>
+    <%= form_with(url: "/users/registration", scope: :user, local: true) do |form| %>
       <div class="actions">
         <%= form.label :email%>
         <%= form.email_field :email %>
+        <%= form.label(:lastname, "Nom") %>
+        <%= form.text_field(:lastname,required: true, id:"last-name", class:"form-control", placeholder:"nom", minlength: 2, maxlength: 100) %>
+        <%= form.label(:name, "Prénom") %>
+        <%= form.text_field(:name, required: true, id:'name', class:"form-control", placeholder:"prenom", minlength: 2, maxlength: 20) %>
         <%= form.label :password %>
         <%= form.password_field :password %>
         <%= form.submit "Create"%>
       </div>
     <% end %>
 
-
+    
+    <% if @current_user.role == "admin" %>
+      <div class="form-check">
+        <label class="form-check-label">
+          <input type="checkbox" class="form-check-input">
+          Admin?
+        </label>
+      </div>
+    <% end %>
 
       <h3>créer un projet</h3>
       <div id="containers">
@@ -32,7 +40,7 @@
         </div>
           <button type="submit" class="btn btn-primary">Submit</button>
           <% end %>
-        </div>
+      </div>
 
   <% else %>
     <h1>Vous n'avez pas le droit d'être ici</h1>

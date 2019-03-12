@@ -6,7 +6,7 @@
     <%= form_with url: "/users/login", local: true do |f| %>
       <div class="flex-container">
         <div class="input-group-addon"><i class="glyphicon glyphicon-user glyphicon-settings"></i></div>
-        <%= f.text_field(:name, required: true, class:"glyphicon glyphicon-user fadeIn second",minlength: 2, maxlength: 100) %>
+        <%= f.text_field(:email, required: true, class:"glyphicon glyphicon-user fadeIn second",minlength: 2, maxlength: 100) %>
       </div>
         <div class="flex-container">
           <div class="input-group-addon"><i class="glyphicon glyphicon-lock glyphicon-settings"></i></div>

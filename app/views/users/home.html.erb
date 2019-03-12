@@ -1,6 +1,6 @@
 <div id="flex-user">
   <span id="logo">Simple project</span>
-  <span id="user-name">Emmanuel Nozard</span>
+  <span id="user-name"><%="#{@current_user.name}  #{@current_user.lastname}"%></span>
 </div>
 
 <div id="menu-bar">
@@ -9,96 +9,84 @@
     <li><a href="#news">Tâche</a></li>
     <li><a href="#contact">Taskforce</a></li>
     <li><a class="active" href="#about">Administration</a></li>
-    <li style="float:right" onclick="shutDown()"><a href="#about"><i class="glyphicon glyphicon-off"></i></a></li>
-    <!--li><span class="right-glyphicon glyphicon glyphicon-off"></span></li-->
+    <li id="shut-down"><a><i class="glyphicon glyphicon-off"></i></a></li>
   </ul>
 </div>
-<style>
-  .form-content{
-    background-color: #f6f6f6;
-    border-top: 1px solid #dce8f1;
-    padding:20px;
-  }
-</style>
+
 <%#begin to of the form content%>
 <div class="form-content">
-  <%= form_with url: 'login', local: true do |f| %>
-    <h2>Mon adresse e-mail</h2>
 
-    <div class="form-group">
-      <%= f.label(:previousMail, "précédent e-mail") %>
-      <%= f.text_field(:previousMail, required: true, id:"exampleInputEmail1" , class:"form-control", placeholder:"Enter email", minlength: 2, maxlength: 100) %>
+  <%= form_with(model: @current_user, scope: :user, remote: false) do |f| %>
+    <div id="flex-reorganization">
+      <div id="user-info-left">
 
-      <%= f.label(:newMail, "nouveau e-mail") %>
-      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-    </div>
+          <h2>Mon adresse e-mail</h2>
+          <div class="form-group">
+            <%= f.label(:previousMail, "précédent e-mail") %>
+            <%= f.text_field(:previousMail, required: true, id:"previous-mail" , class:"form-control", placeholder:"Enter email", minlength: 2, maxlength: 100) %>
+            <%= f.label(:new_mail, "nouveau e-mail") %>
+            <%= f.text_field(:new_mail, required: true, id:"new-mail", class:"form-control", placeholder:"Enter email", minlength: 2, maxlength: 100) %>
+          </div>
 
-    <div class="form-group">
-      <label for="exampleInputPassword1">Password</label>
-      <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-    </div>
-    <div class="form-group">
-      <label for="exampleSelect1">Example select</label>
-      <select class="form-control" id="exampleSelect1">
-        <option>1</option>
-        <option>2</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label for="exampleSelect2">Example multiple select</label>
-      <select multiple class="form-control" id="exampleSelect2">
-        <option>1</option>
-        <option>2</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label for="exampleTextarea">Example textarea</label>
-      <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
-    </div>
-    <div class="form-group">
-      <label for="exampleInputFile">File input</label>
-      <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
-      <small id="fileHelp" class="form-text text-muted">This is some placeholder block-level help text for the above input. It's a bit lighter and easily wraps to a new line.</small>
-    </div>
-    <fieldset class="form-group">
-      <legend>Radio buttons</legend>
-      <div class="form-check">
-        <label class="form-check-label">
-          <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked>
-          Option one is this and that&mdash;be sure to include why it's great
-        </label>
-      </div>
-      <div class="form-check">
-      <label class="form-check-label">
-          <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="option2">
-          Option two can be something else and selecting it will deselect option one
-        </label>
-      </div>
-      <div class="form-check disabled">
-      <label class="form-check-label">
-          <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios3" value="option3" disabled>
-          Option three is disabled
-        </label>
-      </div>
-    </fieldset>
-    <div class="form-check">
-      <label class="form-check-label">
-        <input type="checkbox" class="form-check-input">
-        Check me out
-      </label>
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-  <%end%>
+          <h2>Mon mot de passe:</h2>
+          <div class="form-group">
+              <%= f.label(:password, "Ancien mot de passe") %>
+              <%= f.password_field(:password, required: true, id:"password", class:"form-control", minlength: 8, maxlength: 30) %>
+              <%= f.label(:new_password, "Nouveau mot de passe") %>
+              <%= f.password_field(:new_password, required: true, id:"new-password", class:"form-control", minlength: 3, maxlength: 30) %>
+              <%= f.label(:password_confirmation, "Confirm password") %>
+              <%= f.password_field(:password_confirmation, required: true,id:"confirm-password", class:"form-control", minlength: 3, maxlength: 30) %>
+          </div>
 
+          <h2>Mon nom:</h2>
+          <div class="form-group">
+            <%= f.label(:lastname, "Nom") %>
+            <%= f.text_field(:lastname,required: true, id:"last-name", class:"form-control", placeholder:"nom", minlength: 2, maxlength: 100) %>
+            <div>
+              <%= f.label(:name, "Prénom") %>
+              <%= f.text_field(:name, required: true, id:'name', class:"form-control", placeholder:"prenom", minlength: 2, maxlength: 100) %>
+            </div>
+          </div>
+
+          <%= f.submit "valider"%>
+          <% end %>
+        </div>
+
+        <div id="user-info-right">
+            <h2 class="principal-right-title">Mon apparence: </h2>
+            <h4 class="right-title">Modifier ma photo: </h4>
+            <div class="form-group">
+              <%= image_tag("zozor.png", :alt => "anonymous profile", id:"user-image", class:'center-content-right') %>
+              <input type="file" name="update" class="form-control-file center-content-file" id="idInputFile" aria-describedby="fileHelp">
+              <%= form_with(url: "/users/update-color", scope: :session, local: true) do |form| %>
+                <%= form.submit "mise à jour"%>
+              <% end %>
+            </div>
+
+            <div class="form-group">
+                <%= form_with(model: @current_user, scope: :session, local: true) do |form| %>
+                  <%= form.label(:color, "changer couleur" ,class:'center-content-right') %>
+                  <%= form.text_field(:color, required: true, class:"form-control", placeholder:"couleur", minlength: 2, maxlength: 100) %>
+                <%= form.submit "mise à jour"%>
+              <% end %>
+            </div>
+
+            <% if @current_user.role == "admin" %>
+              <div class="form-group">
+                  <a href="/users/admin"><%= image_tag("plus.png", :alt => "anonymous profile", id:"user-image", class:'') %>
+                     <span style="color:black">Créer un nouveau compte</span>
+                  </a>
+              </div>
+              <%end%>
+        </div>
+    </div>
 </div>
 
 <% if @current_user %>
   <% if @current_user.role == "admin" %>
-    <h1>Bienvenue administrateur <%= @current_user.name %> !</h1>
-    <a href="/users/home">accueil</a>
-    <a href="/users/admin">admin</a>
+    <h1>Bienvenue administrateur</h1>
   <% else %>
-    <h1>Bienvenue <%= @current_user.name %> !</h1>
+    <h1>t'es pas administrateur</h1>
   <% end %>
   <%= form_tag "/users/login", :id => 'myForm', method: :delete do %>
   <% end %>
@@ -132,3 +120,21 @@
     <h1>Bienvenue visiteur anonyme !</h1>
     <a href="/users/login">S'identifier</a>
 <% end %>
+<h1>Listing articles</h1>
+
+<table id="customers">
+  <tr>
+    <th>name</th>
+    <th>lastname</th>
+    <th></th>
+  </tr>
+
+  <% @users.each do |user| %>
+  <tr>
+   <td><%= user.name %></td>
+   <td><%= user.lastname %></td>
+   <td><%= link_to 'Show', user_path(user) %></td>
+   <td><%= link_to 'Edit', edit_user_path(user) %></td>
+  </tr>
+  <% end %>
+  </table>

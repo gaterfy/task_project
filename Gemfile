@@ -12,6 +12,8 @@ gem 'puma', '~> 3.11'
 
 gem 'bcrypt', '~> 3.1.7'
 gem 'bootstrap'
+gem 'jquery-rails'
+
 gem 'bootstrap-glyphicons'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'

@@ -11,8 +11,8 @@
     </tr>
   <% @current_user.projects.each do |project| %>
     <tr>
-      <%= content_tag(:td ,Task.find(project.id-1).name) %>
-      <%= content_tag(:td ,Task.find(project.id-1).duration)%>
+      <%= content_tag(:td ,Task.find(2).name) %>
+      <%= content_tag(:td ,Task.find(1).duration)%>
     </tr>
 <% end %>
 </table>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_05_083013) do
+ActiveRecord::Schema.define(version: 2019_03_06_134215) do
 
   create_table "projects", force: :cascade do |t|
     t.string "name"
@@ -33,6 +33,11 @@ ActiveRecord::Schema.define(version: 2019_03_05_083013) do
     t.string "role"
     t.integer "project_id"
     t.string "password_digest"
+    t.string "email"
+    t.string "lastname"
+    t.string "color"
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.index ["project_id"], name: "index_users_on_project_id"
   end
 
