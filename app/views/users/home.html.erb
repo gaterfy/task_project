@@ -16,39 +16,38 @@
 <%#begin to of the form content%>
 <div class="form-content">
 
-  <%= form_with(model: @current_user, scope: :user, remote: false) do |f| %>
+  <%= form_with(model: @current_user, scope: :user, id:"target", remote: false) do |f| %>
     <div id="flex-reorganization">
       <div id="user-info-left">
 
           <h2>Mon adresse e-mail</h2>
           <div class="form-group">
             <%= f.label(:previousMail, "précédent e-mail") %>
-            <%= f.text_field(:previousMail, required: true, id:"previous-mail" , class:"form-control", placeholder:"Enter email", minlength: 2, maxlength: 100) %>
-            <%= f.label(:new_mail, "nouveau e-mail") %>
-            <%= f.text_field(:new_mail, required: true, id:"new-mail", class:"form-control", placeholder:"Enter email", minlength: 2, maxlength: 100) %>
+            <%= f.email_field(:previousMail, required: true, id:"previous-mail" , class:"form-control", placeholder:"Enter email", value:"#{@current_user.email}", minlength: 2, maxlength: 100) %>
+            <%= f.label(:email, "nouveau e-mail") %>
+            <%= f.email_field(:email, required: true, id:"new-mail", class:"form-control", placeholder:"Enter email", minlength: 2, maxlength: 100) %>
           </div>
 
           <h2>Mon mot de passe:</h2>
           <div class="form-group">
-              <%= f.label(:password, "Ancien mot de passe") %>
-              <%= f.password_field(:password, required: true, id:"password", class:"form-control", minlength: 8, maxlength: 30) %>
-              <%= f.label(:new_password, "Nouveau mot de passe") %>
-              <%= f.password_field(:new_password, required: true, id:"new-password", class:"form-control", minlength: 3, maxlength: 30) %>
+              <%= f.label(:previous_password, "Ancien mot de passe") %>
+              <%= f.password_field(:previous_password, required: true, id:"password", class:"form-control", minlength: 8, maxlength: 30) %>
+              <%= f.label(:password, "Nouveau mot de passe") %>
+              <%= f.password_field(:password, required: true, id:"new-password", class:"form-control", value:"", minlength: 6, maxlength: 30) %>
               <%= f.label(:password_confirmation, "Confirm password") %>
-              <%= f.password_field(:password_confirmation, required: true,id:"confirm-password", class:"form-control", minlength: 3, maxlength: 30) %>
+              <%= f.password_field(:password_confirmation, required: true,id:"confirm-password", class:"form-control", minlength: 6, maxlength: 30) %>
           </div>
 
           <h2>Mon nom:</h2>
           <div class="form-group">
             <%= f.label(:lastname, "Nom") %>
-            <%= f.text_field(:lastname,required: true, id:"last-name", class:"form-control", placeholder:"nom", minlength: 2, maxlength: 100) %>
+            <%= f.text_field(:lastname,required: false, id:"last-name", class:"form-control", placeholder:"nom", pattern:"[A-Za-z]{2,100}") %>
             <div>
               <%= f.label(:name, "Prénom") %>
-              <%= f.text_field(:name, required: true, id:'name', class:"form-control", placeholder:"prenom", minlength: 2, maxlength: 100) %>
+              <%= f.text_field(:name, required: true, id:'name', class:"form-control", placeholder:"prenom", pattern:"[A-Za-z]{2,100}") %>
             </div>
           </div>
-
-          <%= f.submit "valider"%>
+          <%= f.submit "valider", id:"send-button"%>
           <% end %>
         </div>
 
@@ -67,6 +66,7 @@
                 <%= form_with(model: @current_user, scope: :session, local: true) do |form| %>
                   <%= form.label(:color, "changer couleur" ,class:'center-content-right') %>
                   <%= form.text_field(:color, required: true, class:"form-control", placeholder:"couleur", minlength: 2, maxlength: 100) %>
+                  <%= color_field(:user, "color", value: "#ff0000" ) %>
                 <%= form.submit "mise à jour"%>
               <% end %>
             </div>
@@ -91,7 +91,6 @@
   <%= form_tag "/users/login", :id => 'myForm', method: :delete do %>
   <% end %>
   <h1>Listes de projets</h1>
-
 
   <p>
       <% if @current_user.projects %>
@@ -120,21 +119,19 @@
     <h1>Bienvenue visiteur anonyme !</h1>
     <a href="/users/login">S'identifier</a>
 <% end %>
-<h1>Listing articles</h1>
 
-<table id="customers">
-  <tr>
-    <th>name</th>
-    <th>lastname</th>
-    <th></th>
-  </tr>
-
-  <% @users.each do |user| %>
-  <tr>
-   <td><%= user.name %></td>
-   <td><%= user.lastname %></td>
-   <td><%= link_to 'Show', user_path(user) %></td>
-   <td><%= link_to 'Edit', edit_user_path(user) %></td>
-  </tr>
-  <% end %>
-  </table>
+<script>
+  $(document).ready(function() {
+  var passwordField = document.getElementById("new-password");
+  var passwordConfirmationField = document.getElementById("confirm-password");
+  var validatePassword = (passwordField.value == passwordConfirmationField.value);
+  var passwordListener = function(event) {
+    passwordConfirmationField.setCustomValidity(passwordField.value == passwordConfirmationField.value ? "" : "mot de passe pas identique");
+  }
+  $( "#target" ).submit(function( event ) {
+    event.preventDefault();
+    passwordConfirmationField.addEventListener("input", passwordListener);
+    console.log("valeur", passwordField.value);
+  });
+});
+</script>

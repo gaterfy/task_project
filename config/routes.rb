@@ -5,13 +5,13 @@ Rails.application.routes.draw do
     collection do
       get :login, action: :login
       get :home,  action: :home
-      get :admin, action: :admin
-      get :task, action: :task
-      get :edit, action: :edit
+      get :admin, action: :admin #ressource
+      #get :task, action: :task => il lui faut un controller , au moins d'une page
+      #get :edit, action: :edit
 
-      post :login, action: :check
+      post :login, action: :check #controllers sessions #sessions
       post :update, action: :update
-      post :registration, action: :create
+      post :registration, action: :new
       delete :login, action: :logout
     end
   end

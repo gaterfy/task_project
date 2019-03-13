@@ -125,7 +125,7 @@ input[type=button]:active, input[type=submit]:active, input[type=reset]:active  
 }
 
 input[type=text], input[type=password] , #password{
-  background-color: #ffffb1;
+  //background-color: #ffffb1;
   border: none;
   color: #0d0d0d;
   padding: 15px 32px;
@@ -272,14 +272,19 @@ li a:hover:not(.active) {
 }
 /*home viewver*/
 #user-info-left{
-  //background-color: red;
   width:50%;
 }
 #user-info-right{
-  //background-color: yellow;
   width:50%;
   padding-left:20px;
+}
+
+.error{
+  color: red;
 }
 .submit-home{
   background-color: #00B050;
 }
+/*input[type="text"]:valid {
+   box-shadow: 0 0 2px 1px green;
+}*/

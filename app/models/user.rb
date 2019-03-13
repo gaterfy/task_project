@@ -4,6 +4,9 @@ class User < ActiveRecord::Base
                     length: {minimum: 8, maximum: 30}, allow_nil: true
   validates :lastname, presence: true,
                     length: { minimum: 4}
+  validates :name, uniqueness: true, presence: true,
+                    length: { minimum: 4}
+  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
   has_many :projects
   before_save :downcase_attributes
   has_secure_password

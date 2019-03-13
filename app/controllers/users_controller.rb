@@ -12,11 +12,7 @@ class UsersController < ApplicationController
 
   def update
     @current_user = User.find(params[:id])
-    if @current_user.update(user_params)
-      redirect_to 'users/home'
-    else
-      render 'update'
-    end
+    redirect_to 'users/home' if @current_user.update(user_params)
   end
 
 
@@ -36,7 +32,7 @@ class UsersController < ApplicationController
     end
   end
 
-  def create
+  def new
     if @current_user.role == "admin"
       User.create(user_params)
       flash[:info] = "Vous avez créer un compte , connectez-vous à présent"
