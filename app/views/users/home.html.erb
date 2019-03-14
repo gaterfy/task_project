@@ -1,5 +1,5 @@
 <div id="flex-user">
-  <span id="logo">Simple project</span>
+  <%= image_tag("logo.png", :alt => "anonymous profile", id:"logo", class:'') %>
   <span id="user-name"><%="#{@current_user.name}  #{@current_user.lastname}"%></span>
 </div>
 
@@ -55,10 +55,10 @@
             <h2 class="principal-right-title">Mon apparence: </h2>
             <h4 class="right-title">Modifier ma photo: </h4>
             <div class="form-group">
-              <%= image_tag("zozor.png", :alt => "anonymous profile", id:"user-image", class:'center-content-right') %>
-              <input type="file" name="update" class="form-control-file center-content-file" id="idInputFile" aria-describedby="fileHelp">
-              <%= form_with(url: "/users/update-color", scope: :session, local: true) do |form| %>
-                <%= form.submit "mise à jour"%>
+              <%= form_with(url: "uploaders", local: true) do |form| %>
+                <%= image_tag("zozor.png", :alt => "anonymous profile", id:"user-image", class:'center-content-right') %>
+                <%= form.file_field :avatar, id: "idInputFile" %><br>
+              <%= form.submit "mise à jour"%>
               <% end %>
             </div>
 
@@ -66,10 +66,13 @@
                 <%= form_with(model: @current_user, scope: :session, local: true) do |form| %>
                   <%= form.label(:color, "changer couleur" ,class:'center-content-right') %>
                   <%= form.text_field(:color, required: true, class:"form-control", placeholder:"couleur", minlength: 2, maxlength: 100) %>
-                  <%= color_field(:user, "color", value: "#ff0000" ) %>
+                  <%= color_field(:user, :color) %>
+
                 <%= form.submit "mise à jour"%>
               <% end %>
             </div>
+
+
 
             <% if @current_user.role == "admin" %>
               <div class="form-group">
@@ -124,14 +127,18 @@
   $(document).ready(function() {
   var passwordField = document.getElementById("new-password");
   var passwordConfirmationField = document.getElementById("confirm-password");
-  var validatePassword = (passwordField.value == passwordConfirmationField.value);
-  var passwordListener = function(event) {
-    passwordConfirmationField.setCustomValidity(passwordField.value == passwordConfirmationField.value ? "" : "mot de passe pas identique");
+
+  function validatePassword(){
+    if (passwordField.value != passwordConfirmationField.value) {
+      passwordConfirmationField.setCustomValidity('mot de passe pas identique.');
+    } else {
+        passwordConfirmationField.setCustomValidity('');
+    }
   }
+
   $( "#target" ).submit(function( event ) {
     event.preventDefault();
-    passwordConfirmationField.addEventListener("input", passwordListener);
-    console.log("valeur", passwordField.value);
+    validatePassword();
   });
 });
 </script>

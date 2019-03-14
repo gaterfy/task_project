@@ -7,20 +7,24 @@
 
     <%= form_with(url: "/users/registration", scope: :user, local: true) do |form| %>
       <div class="actions">
-        <%= form.label :email%>
-        <%= form.email_field :email %>
-        <%= form.label(:lastname, "Nom") %>
+        <%= form.label :email%> <br>
+        <%= form.email_field :email , class:"form-control" %><br>
+        <%= form.label(:lastname, "Nom") %><br>
         <%= form.text_field(:lastname,required: true, id:"last-name", class:"form-control", placeholder:"nom", minlength: 2, maxlength: 100) %>
-        <%= form.label(:name, "Prénom") %>
-        <%= form.text_field(:name, required: true, id:'name', class:"form-control", placeholder:"prenom", minlength: 2, maxlength: 20) %>
-        <%= form.label :password %>
+        <br>
+        <%= form.label(:name, "Prénom") %><br>
+        <%= form.text_field(:name, required: true, id:'name', class:"form-control", placeholder:"prenom", minlength: 2, maxlength: 20) %><br>
+        <%= form.label :password %><br>
         <%= form.password_field :password %>
+        <div>
+          <%= image_tag("zozor.png", :alt => "anonymous profile", id:"user-image", class:'center-content-right') %>
+          <%= form.file_field :avatar, id:"click-image" , style:"display:none"%><br>
+        </div>
+        <%= form.label :admin?%>
+        <%= form.check_box(:admin, :disabled => true)%><br>
         <%= form.submit "Create"%>
       </div>
-
-      <%= form.check_box(:admin, :disabled => true)%>
     <% end %>
-
 
     <% if @current_user.role == "admin" %>
       <div class="form-check">
@@ -48,3 +52,22 @@
     <h1>Vous n'avez pas le droit d'être ici</h1>
   <% end %>
 <% end %>
+
+<script type="text/javascript">
+  document.getElementById("user-image").onclick = function(){
+    document.getElementById("click-image").click();
+  }
+  function readURL(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        $('#user-image').attr('src', e.target.result);
+      }
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+
+  $("#click-image").change(function() {
+    readURL(this);
+  });
+</script>

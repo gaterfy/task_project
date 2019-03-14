@@ -43,7 +43,6 @@ class UsersController < ApplicationController
   end
 
   def check
-    p "email" + params[:email] + "password" + params[:password]
     @current_user = User.find_by(email: params[:email]).authenticate(params[:password])
 
     if @current_user
@@ -62,19 +61,17 @@ class UsersController < ApplicationController
     @project = Project.all
   end
 
-  # def update
-  #   user = User.find(@current_user.id)
-  #   succes= user.update(user_params)
-  #
-  #   if success
-  #     redirect_to "/users/home"
-  #   end
-  #
-  # end
+  def set_user_profile_picture
+    #//require 'open-uri'
+    #user = @current_user
+    #user.avatar = params[:file] # Assign a file like this, or
+    #my_file = params[:file]
+
+  end
 
   private
   def user_params
-    params.require(:user).permit(:email, :name, :lastname, :password, :color)
+    params.require(:user).permit(:email, :name, :lastname, :password, :color, :avatar)
   end
 
 end

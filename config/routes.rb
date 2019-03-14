@@ -12,9 +12,19 @@ Rails.application.routes.draw do
       post :login, action: :check #controllers sessions #sessions
       post :update, action: :update
       post :registration, action: :new
+      post :uploaders, action: :set_user_profile_picture
       delete :login, action: :logout
     end
+
   end
+
+  resources :uploaders, only: [:post] do
+      post :set_picture, action: :set_user_profile_picture
+  end
+  resource :set_picture, only: [:post] do
+    post :set_picture, action: :set_user_profile_picture
+  end
+
 
 match "*path", to: redirect("/"), via: :get
 end
